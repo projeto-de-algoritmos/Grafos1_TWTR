@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import { useUsers } from '../../hooks/users';
 
 import Feed from '../Feed';
 
@@ -14,6 +16,13 @@ import {
 } from './styles';
 
 const ProfilePage: React.FC = () => {
+  const { users, bfs } = useUsers();
+
+  // Debug bfs
+  useEffect(() => {
+    bfs(users[1]);
+  }, []);
+
   return (
     <Container>
       <Banner>
@@ -22,7 +31,7 @@ const ProfilePage: React.FC = () => {
 
       <ProfileData>
         <EditButton outlined>Editar perfil</EditButton>
-        <h1>Lucas Siqueira</h1>
+        <h1>{users[0].completeName}</h1>
         <h2>@lucassiqz</h2>
 
         <p>Software Developer</p>
