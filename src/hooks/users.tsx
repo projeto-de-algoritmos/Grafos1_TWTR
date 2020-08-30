@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 
 interface UsersContextData {
   users: User[];
@@ -30,7 +30,7 @@ const UsersProvider: React.FC = ({ children }) => {
   // caio = users[2].following = [amigoCaio],
   // ]
 
-  const [users, setUsers] = useState<User[]>([
+  const [users] = useState<User[]>([
     {
       username: 'lucasSiqz',
       completeName: 'Lucas Rodrigues',
@@ -63,65 +63,69 @@ const UsersProvider: React.FC = ({ children }) => {
 
   const removeFollowers = (BFSResult: number[]): void => {};
 
-  const bfs = (startingNode: User): number[] => {
-    // array that tracks the graph
-    const pathway = [] as number[];
+  const bfs = useCallback(
+    (startingNode: User): number[] => {
+      // array that tracks the graph
+      const pathway = [] as number[];
 
-    // create a visited array
-    const visited = [] as any;
+      // create a visited array
+      const visited = [] as any;
 
-    for (let i = 0; i < users.length; i++) {
-      visited[i] = false;
-    }
+      for (let i = 0; i < users.length; i++) {
+        visited[i] = false;
+      }
 
-    // Create an object for queue
-    const queue = [] as number[];
+      // Create an object for queue
+      const queue = [] as number[];
 
-    // add the starting node to the queue
-    const startingNodeIndex = users.findIndex(
-      (user) => user.username === startingNode.username,
-    );
+      // add the starting node to the queue
+      const startingNodeIndex = users.findIndex(
+        (user) => user.username === startingNode.username,
+      );
 
-    visited[startingNodeIndex] = true;
+      visited[startingNodeIndex] = true;
 
-    console.log('number of users:', visited);
+      console.log('number of users:', visited);
 
-    queue.push(startingNodeIndex);
+      queue.push(startingNodeIndex);
 
-    // loop until queue is element
-    while (queue.length > 0) {
-      console.log('estado da fila: ', queue);
-      // get the element from the queue
-      const getQueueElement = queue.shift() as number;
-      pathway.push(getQueueElement);
-      // passing the current vertex to callback funtion
-      console.log('getQueueElement', getQueueElement);
+      // loop until queue is element
+      while (queue.length > 0) {
+        console.log('estado da fila: ', queue);
+        // get the element from the queue
+        const getQueueElement = queue.shift() as number;
+        pathway.push(getQueueElement);
+        // passing the current vertex to callback funtion
+        console.log('getQueueElement', getQueueElement);
 
-      // get the adjacent list for current vertex
-      const getList = users[getQueueElement].following;
+        // get the adjacent list for current vertex
+        const getList = users[getQueueElement].following;
 
-      console.log('getList', getList);
+        console.log('getList', getList);
 
-      // loop through the list and add the element to the
-      // queue if it is not processed yet
-      getList?.forEach((user, index) => {
-        const neighIndex = users.findIndex(
-          (usr) => usr.username === user.username,
-        );
+        // loop through the list and add the element to the
+        // queue if it is not processed yet
 
-        console.log('neigh index', neighIndex);
+        getList.forEach((user) => {
+          const neighIndex = users.findIndex(
+            (usr) => usr.username === user.username,
+          );
 
-        if (!visited[neighIndex]) {
-          visited[neighIndex] = true;
-          queue.push(neighIndex);
-        }
-      });
-    }
-    // slice serve para tirar o proprio user da lista
-    console.log('retorno: ', pathway.slice(1));
+          console.log('neigh index', neighIndex);
 
-    return pathway.slice(1);
-  };
+          if (!visited[neighIndex]) {
+            visited[neighIndex] = true;
+            queue.push(neighIndex);
+          }
+        });
+      }
+      // slice serve para tirar o proprio user da lista
+      console.log('retorno: ', pathway.slice(1));
+
+      return pathway.slice(1);
+    },
+    [users],
+  );
 
   return (
     <UsersContext.Provider value={{ users, bfs }}>

@@ -21,7 +21,7 @@ const ProfilePage: React.FC = () => {
   // Debug bfs
   useEffect(() => {
     bfs(users[1]);
-  }, []);
+  }, [bfs, users]);
 
   return (
     <Container>
