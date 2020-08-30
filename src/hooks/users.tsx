@@ -45,7 +45,7 @@ const UsersProvider: React.FC = ({ children }) => {
       username: 'guilherme-aguiar',
       completeName: 'Guilherme Aguiar',
       online: false,
-      following: [{ username: 'lucassiqz' }],
+      following: [{ username: 'caiooliv' }],
     },
     {
       username: 'caiooliv',
@@ -57,34 +57,43 @@ const UsersProvider: React.FC = ({ children }) => {
       username: 'm',
       completeName: 'naMe',
       online: false,
-      following: [],
+      following: [{ username: 'lucasSiqz' }],
     },
   ]);
 
-  const bfs = (startingNode: User): void => {
+  const removeFollowers = (BFSResult: number[]): void => {};
+
+  const bfs = (startingNode: User): number[] => {
+    // array that tracks the graph
+    const pathway = [] as number[];
+
     // create a visited array
     const visited = [] as any;
 
     for (let i = 0; i < users.length; i++) {
       visited[i] = false;
     }
+
     // Create an object for queue
     const queue = [] as number[];
 
     // add the starting node to the queue
-
     const startingNodeIndex = users.findIndex(
       (user) => user.username === startingNode.username,
     );
 
     visited[startingNodeIndex] = true;
+
+    console.log('number of users:', visited);
+
     queue.push(startingNodeIndex);
 
     // loop until queue is element
     while (queue.length > 0) {
+      console.log('estado da fila: ', queue);
       // get the element from the queue
       const getQueueElement = queue.shift() as number;
-
+      pathway.push(getQueueElement);
       // passing the current vertex to callback funtion
       console.log('getQueueElement', getQueueElement);
 
@@ -93,20 +102,25 @@ const UsersProvider: React.FC = ({ children }) => {
 
       console.log('getList', getList);
 
-      console.log('eae');
-
       // loop through the list and add the element to the
       // queue if it is not processed yet
       getList?.forEach((user, index) => {
-        const neighIndex = getList.findIndex(
+        const neighIndex = users.findIndex(
           (usr) => usr.username === user.username,
         );
+
+        console.log('neigh index', neighIndex);
+
         if (!visited[neighIndex]) {
           visited[neighIndex] = true;
           queue.push(neighIndex);
         }
       });
     }
+    // slice serve para tirar o proprio user da lista
+    console.log('retorno: ', pathway.slice(1));
+
+    return pathway.slice(1);
   };
 
   return (

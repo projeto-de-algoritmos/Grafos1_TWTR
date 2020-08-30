@@ -5,6 +5,8 @@ import List from '../List';
 import FollowSuggestion from '../FollowSuggestion';
 import News from '../News';
 
+import { useUsers } from '../../hooks/users';
+
 import {
   Container,
   SearchWrapper,
@@ -14,6 +16,9 @@ import {
 } from './styles';
 
 const SideBar: React.FC = () => {
+  const { users, bfs } = useUsers();
+  const pathway = (bfs(users[1]) as unknown) as number[];
+
   return (
     <Container>
       <SearchWrapper>
@@ -26,11 +31,14 @@ const SideBar: React.FC = () => {
           {/* Aplicar grafo aqui */}
           <List
             title="Talvez você curta"
-            elements={[
-              <FollowSuggestion name="Lucas Siqueira" nickname="@lucassiqz" />,
-              <FollowSuggestion name="Lucas Siqueira" nickname="@lucassiqz" />,
-              <FollowSuggestion name="Lucas Siqueira" nickname="@lucassiqz" />,
-            ]}
+            elements={pathway.map((userIndex: number) => {
+              return (
+                <FollowSuggestion
+                  name={users[userIndex].completeName}
+                  nickname={users[userIndex].username}
+                />
+              );
+            })}
           />
           <List
             title="O que está acontecendo"
