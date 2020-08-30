@@ -8,7 +8,7 @@ interface UsersContextData {
   bfs(startingNode: User): number[];
 }
 
-interface FollwingType {
+interface FollowingType {
   username: string;
 }
 
@@ -19,7 +19,7 @@ export interface User {
   description?: string;
   nascimento?: string;
   followers?: User[];
-  following: FollwingType[];
+  following: FollowingType[];
 }
 
 const UsersContext = createContext<UsersContextData>({} as UsersContextData);
@@ -55,12 +55,25 @@ const UsersProvider: React.FC = ({ children }) => {
     {
       username: 'm',
       completeName: 'naMe',
-      following: [{ username: 'lucasSiqz' }],
+      following: [{ username: 'caiooliv' }],
     },
   ]);
   const [loggedUser, setLoggedUser] = useState<User | null>(users[0]);
 
-  // const removeFollowers = (BFSResult: number[]): void => {};
+  const removeFollowers = (
+    BFSResult: number[],
+    startingNodeIndex: number,
+  ): number[] => {
+    BFSResult.forEach((element, index) => {
+      users[startingNodeIndex].following.map((user) => {
+        if (user.username === users[element].username) {
+          const removido = BFSResult.splice(index, 1);
+          console.log('Usuario ', users[removido[0]].username, ' foi removido');
+        }
+      });
+    });
+    return BFSResult;
+  };
 
   const bfs = useCallback(
     (startingNode: User): number[] => {
@@ -84,23 +97,17 @@ const UsersProvider: React.FC = ({ children }) => {
 
       visited[startingNodeIndex] = true;
 
-      console.log('number of users:', visited);
-
       queue.push(startingNodeIndex);
 
       // loop until queue is element
       while (queue.length > 0) {
-        console.log('estado da fila: ', queue);
         // get the element from the queue
         const getQueueElement = queue.shift() as number;
         pathway.push(getQueueElement);
         // passing the current vertex to callback funtion
-        console.log('getQueueElement', getQueueElement);
 
         // get the adjacent list for current vertex
         const getList = users[getQueueElement].following;
-
-        console.log('getList', getList);
 
         // loop through the list and add the element to the
         // queue if it is not processed yet
@@ -109,8 +116,6 @@ const UsersProvider: React.FC = ({ children }) => {
           const neighIndex = users.findIndex(
             (usr) => usr.username === user.username,
           );
-
-          console.log('neigh index', neighIndex);
 
           if (!visited[neighIndex]) {
             visited[neighIndex] = true;
@@ -121,7 +126,11 @@ const UsersProvider: React.FC = ({ children }) => {
       // slice serve para tirar o proprio user da lista
       console.log('retorno: ', pathway.slice(1));
 
-      return pathway.slice(1);
+      const filteredPath = removeFollowers(pathway.slice(1), startingNodeIndex);
+
+      console.log('filtered', filteredPath);
+
+      return filteredPath;
     },
     [users],
   );
