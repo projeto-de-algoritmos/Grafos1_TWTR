@@ -32,7 +32,6 @@ const UsersProvider: React.FC = ({ children }) => {
   // caio = users[2].following = [amigoCaio],
   // ]
 
-  const [loggedUser, setLoggedUser] = useState<User | null>(null);
   const [users, setUsers] = useState<User[]>([
     {
       username: 'lucasSiqz',
@@ -59,6 +58,7 @@ const UsersProvider: React.FC = ({ children }) => {
       following: [{ username: 'lucasSiqz' }],
     },
   ]);
+  const [loggedUser, setLoggedUser] = useState<User | null>(users[0]);
 
   // const removeFollowers = (BFSResult: number[]): void => {};
 
