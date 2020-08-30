@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 
 interface UsersContextData {
   users: User[];
-  bfs(startingNode: User): void;
+  bfs(startingNode: User): number[];
 }
 
 interface FollwingType {
@@ -61,7 +61,7 @@ const UsersProvider: React.FC = ({ children }) => {
     },
   ]);
 
-  const removeFollowers = (BFSResult: number[]): void => {};
+  // const removeFollowers = (BFSResult: number[]): void => {};
 
   const bfs = useCallback(
     (startingNode: User): number[] => {

@@ -17,7 +17,7 @@ import {
 
 const SideBar: React.FC = () => {
   const { users, bfs } = useUsers();
-  const pathway = (bfs(users[1]) as unknown) as number[];
+  const pathway = bfs(users[1]);
 
   return (
     <Container>
