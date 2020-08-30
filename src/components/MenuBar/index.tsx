@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useUsers } from '../../hooks/users';
+
 import Button from '../Button';
 
 import {
@@ -19,6 +21,8 @@ import {
 } from './styles';
 
 const MenuBar: React.FC = () => {
+  const { setLoggedUser } = useUsers();
+
   return (
     <Container>
       <Topside>
@@ -62,7 +66,11 @@ const MenuBar: React.FC = () => {
           <strong>@lucassiqz</strong>
         </ProfileData>
 
-        <ExitIcon />
+        <ExitIcon
+          onClick={() => {
+            setLoggedUser(null);
+          }}
+        />
       </Botside>
     </Container>
   );

@@ -2,6 +2,9 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 
 interface UsersContextData {
   users: User[];
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+  loggedUser: User | null;
+  setLoggedUser: React.Dispatch<React.SetStateAction<User | null>>;
   bfs(startingNode: User): number[];
 }
 
@@ -9,10 +12,9 @@ interface FollwingType {
   username: string;
 }
 
-interface User {
+export interface User {
   username: string;
   completeName: string;
-  online: boolean;
   city?: string;
   description?: string;
   nascimento?: string;
@@ -30,11 +32,11 @@ const UsersProvider: React.FC = ({ children }) => {
   // caio = users[2].following = [amigoCaio],
   // ]
 
-  const [users] = useState<User[]>([
+  const [loggedUser, setLoggedUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[]>([
     {
       username: 'lucasSiqz',
       completeName: 'Lucas Rodrigues',
-      online: true,
       following: [
         {
           username: 'caiooliv',
@@ -44,19 +46,16 @@ const UsersProvider: React.FC = ({ children }) => {
     {
       username: 'guilherme-aguiar',
       completeName: 'Guilherme Aguiar',
-      online: false,
       following: [{ username: 'caiooliv' }],
     },
     {
       username: 'caiooliv',
       completeName: 'Caio Oliveira',
-      online: false,
       following: [{ username: 'm' }],
     },
     {
       username: 'm',
       completeName: 'naMe',
-      online: false,
       following: [{ username: 'lucasSiqz' }],
     },
   ]);
@@ -128,7 +127,9 @@ const UsersProvider: React.FC = ({ children }) => {
   );
 
   return (
-    <UsersContext.Provider value={{ users, bfs }}>
+    <UsersContext.Provider
+      value={{ users, bfs, setUsers, loggedUser, setLoggedUser }}
+    >
       {children}
     </UsersContext.Provider>
   );
