@@ -5,7 +5,7 @@ import List from '../List';
 import FollowSuggestion from '../FollowSuggestion';
 import News from '../News';
 
-import { useUsers } from '../../hooks/users';
+import { useUsers, User } from '../../hooks/users';
 
 import {
   Container,
@@ -16,8 +16,8 @@ import {
 } from './styles';
 
 const SideBar: React.FC = () => {
-  const { users, bfs } = useUsers();
-  const pathway = bfs(users[1]);
+  const { users, bfs, loggedUser } = useUsers();
+  const pathway = bfs(loggedUser as User);
 
   return (
     <Container>
