@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useUsers } from '../../hooks/users';
+
 import ProfilePage from '../ProfilePage';
 
 import {
@@ -15,6 +17,8 @@ import {
 } from './styles';
 
 const Main: React.FC = () => {
+  const { loggedUser } = useUsers();
+
   return (
     <Container>
       <Header>
@@ -23,7 +27,7 @@ const Main: React.FC = () => {
         </button>
 
         <ProfileInfo>
-          <strong>Lucas Siqueira</strong>
+          <strong>{loggedUser?.completeName}</strong>
           <span>100 Tweets</span>
         </ProfileInfo>
       </Header>

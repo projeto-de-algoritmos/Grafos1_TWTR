@@ -21,7 +21,7 @@ import {
 } from './styles';
 
 const MenuBar: React.FC = () => {
-  const { setLoggedUser } = useUsers();
+  const { setLoggedUser, loggedUser } = useUsers();
 
   return (
     <Container>
@@ -62,8 +62,8 @@ const MenuBar: React.FC = () => {
         <Avatar />
 
         <ProfileData>
-          <strong>Lucas Siqueira</strong>
-          <strong>@lucassiqz</strong>
+          <strong>{loggedUser?.completeName}</strong>
+          <strong>{`@${loggedUser?.username}`}</strong>
         </ProfileData>
 
         <ExitIcon

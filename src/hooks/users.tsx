@@ -15,10 +15,9 @@ interface FollowingType {
 export interface User {
   username: string;
   completeName: string;
-  city?: string;
+  place?: string;
   description?: string;
-  nascimento?: string;
-  followers?: User[];
+  birth?: string;
   following: FollowingType[];
 }
 
@@ -34,8 +33,11 @@ const UsersProvider: React.FC = ({ children }) => {
 
   const [users, setUsers] = useState<User[]>([
     {
-      username: 'lucasSiqz',
+      username: 'lucassiqz',
       completeName: 'Lucas Siqueira',
+      description: 'Software Engineer',
+      place: 'Brasilia-DF',
+      birth: '14 de julho de 1997',
       following: [
         {
           username: 'caiooliv',
@@ -47,25 +49,36 @@ const UsersProvider: React.FC = ({ children }) => {
     {
       username: 'guilherme-aguiar',
       completeName: 'Guilherme Aguiar',
+      description: 'Software Engineer',
+      place: 'Brasilia-DF',
       following: [{ username: 'caiooliv' }, { username: 'x' }],
     },
     {
       username: 'caiooliv',
       completeName: 'Caio Oliveira',
+      description: 'Software Engineer',
+      place: 'Brasilia-DF',
+      birth: '18 de janeiro de 1997',
       following: [{ username: 'matheus-rn' }, { username: 'guilherme-aguiar' }],
     },
     {
       username: 'matheus-rn',
       completeName: 'Matheus',
+      description: 'Software Engineer',
+      place: 'Brasilia-DF',
       following: [{ username: 'caiooliv' }],
     },
     {
       username: 'x',
       completeName: 'xxxx',
-      following: [{ username: 'lucasSiqz' }],
+      description: 'Software Engineer',
+      place: 'São Paulo-SP',
+      following: [{ username: 'lucassiqz' }],
     },
     {
       username: 'y',
+      description: 'Software Engineer',
+      place: 'Rio de Janeiro-RJ',
       completeName: 'yyyy',
       following: [],
     },

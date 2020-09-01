@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useUsers } from '../../hooks/users';
+
 import {
   Container,
   Retweeted,
@@ -19,6 +21,8 @@ import {
 } from './styles';
 
 const Tweet: React.FC = () => {
+  const { loggedUser } = useUsers();
+
   return (
     <Container>
       <Retweeted>
@@ -31,8 +35,8 @@ const Tweet: React.FC = () => {
 
         <Content>
           <Header>
-            <strong>Lucas Siqueira</strong>
-            <span>@lucassiqz</span>
+            <strong>{loggedUser?.completeName}</strong>
+            <span>{`@${loggedUser?.username}`}</span>
             <Dot />
             <time>19 de julho</time>
           </Header>

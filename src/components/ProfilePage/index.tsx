@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 import { useUsers } from '../../hooks/users';
 
@@ -16,7 +16,22 @@ import {
 } from './styles';
 
 const ProfilePage: React.FC = () => {
-  const { users, bfs } = useUsers();
+  const { users, bfs, loggedUser } = useUsers();
+
+  const getNumberOfFollowers = useCallback((): number => {
+    let numberOfFollowers = 0;
+    users.forEach((user) => {
+      if (
+        user.following?.some(
+          (follow) => follow.username === loggedUser?.username,
+        )
+      ) {
+        numberOfFollowers += 1;
+      }
+    });
+
+    return numberOfFollowers;
+  }, [loggedUser, users]);
 
   // Debug bfs
   useEffect(() => {
@@ -31,28 +46,28 @@ const ProfilePage: React.FC = () => {
 
       <ProfileData>
         <EditButton outlined>Editar perfil</EditButton>
-        <h1>{users[0].completeName}</h1>
-        <h2>@lucassiqz</h2>
+        <h1>{loggedUser?.completeName}</h1>
+        <h2>{`@${loggedUser?.username}`}</h2>
 
-        <p>Software Developer</p>
+        <p>{loggedUser?.description}</p>
 
         <ul>
           <li>
             <LocationIcon />
-            Brasília, Brasil
+            {loggedUser?.place}
           </li>
           <li>
             <CakeIcon />
-            Nascido em 14 de julho de 1997
+            {loggedUser?.birth}
           </li>
         </ul>
 
         <Followage>
           <span>
-            seguindo <strong>93</strong>
+            seguindo <strong>{loggedUser?.following?.length}</strong>
           </span>
           <span>
-            <strong>453 </strong> seguidores
+            <strong>{getNumberOfFollowers()} </strong> seguidores
           </span>
         </Followage>
       </ProfileData>

@@ -8,7 +8,7 @@ export const Container = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: var(--outline);
+  background: var(--primary);
 `;
 
 export const Card = styled.div`
