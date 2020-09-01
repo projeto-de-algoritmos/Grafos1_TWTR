@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import StickyBox from 'react-sticky-box';
 
 import List from '../List';
@@ -17,7 +17,11 @@ import {
 
 const SideBar: React.FC = () => {
   const { users, bfs, loggedUser } = useUsers();
-  const pathway = bfs(loggedUser as User);
+  const [pathway, setPathway] = useState<number[]>([]);
+
+  useEffect(() => {
+    setPathway(bfs(loggedUser as User));
+  }, [bfs, loggedUser]);
 
   return (
     <Container>

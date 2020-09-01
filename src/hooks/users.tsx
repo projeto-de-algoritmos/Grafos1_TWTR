@@ -35,45 +35,56 @@ const UsersProvider: React.FC = ({ children }) => {
   const [users, setUsers] = useState<User[]>([
     {
       username: 'lucasSiqz',
-      completeName: 'Lucas Rodrigues',
+      completeName: 'Lucas Siqueira',
       following: [
         {
           username: 'caiooliv',
         },
+        { username: 'guilherme-aguiar' },
+        { username: 'y' },
       ],
     },
     {
       username: 'guilherme-aguiar',
       completeName: 'Guilherme Aguiar',
-      following: [{ username: 'caiooliv' }],
+      following: [{ username: 'caiooliv' }, { username: 'x' }],
     },
     {
       username: 'caiooliv',
       completeName: 'Caio Oliveira',
-      following: [{ username: 'm' }],
+      following: [{ username: 'matheus-rn' }, { username: 'guilherme-aguiar' }],
     },
     {
-      username: 'm',
-      completeName: 'naMe',
+      username: 'matheus-rn',
+      completeName: 'Matheus',
       following: [{ username: 'caiooliv' }],
+    },
+    {
+      username: 'x',
+      completeName: 'xxxx',
+      following: [{ username: 'lucasSiqz' }],
+    },
+    {
+      username: 'y',
+      completeName: 'yyyy',
+      following: [],
     },
   ]);
   const [loggedUser, setLoggedUser] = useState<User | null>(users[0]);
 
-  const removeFollowers = (
-    BFSResult: number[],
-    startingNodeIndex: number,
-  ): number[] => {
-    BFSResult.forEach((element, index) => {
-      users[startingNodeIndex].following.map((user) => {
-        if (user.username === users[element].username) {
-          const removido = BFSResult.splice(index, 1);
-          console.log('Usuario ', users[removido[0]].username, ' foi removido');
-        }
-      });
-    });
-    return BFSResult;
-  };
+  const removeFollowers = useCallback(
+    (BFSResult: number[], startingNodeIndex: number): number[] => {
+      const newResult = BFSResult.filter(
+        (element) =>
+          !users[startingNodeIndex].following.some(
+            (follow) => users[element].username === follow.username,
+          ),
+      );
+
+      return newResult;
+    },
+    [users],
+  );
 
   const bfs = useCallback(
     (startingNode: User): number[] => {
@@ -81,7 +92,7 @@ const UsersProvider: React.FC = ({ children }) => {
       const pathway = [] as number[];
 
       // create a visited array
-      const visited = [] as any;
+      const visited = [] as boolean[];
 
       for (let i = 0; i < users.length; i++) {
         visited[i] = false;
@@ -123,16 +134,11 @@ const UsersProvider: React.FC = ({ children }) => {
           }
         });
       }
-      // slice serve para tirar o proprio user da lista
-      console.log('retorno: ', pathway.slice(1));
-
       const filteredPath = removeFollowers(pathway.slice(1), startingNodeIndex);
-
-      console.log('filtered', filteredPath);
 
       return filteredPath;
     },
-    [users],
+    [users, removeFollowers],
   );
 
   return (
