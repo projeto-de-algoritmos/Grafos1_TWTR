@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from 'react';
 
 interface UsersContextData {
   users: User[];
@@ -38,20 +44,14 @@ const UsersProvider: React.FC = ({ children }) => {
       description: 'Software Engineer',
       place: 'Brasilia-DF',
       birth: '14 de julho de 1997',
-      following: [
-        {
-          username: 'caiooliv',
-        },
-        { username: 'guilherme-aguiar' },
-        { username: 'y' },
-      ],
+      following: [{ username: 'guilherme-aguiar' }],
     },
     {
       username: 'guilherme-aguiar',
       completeName: 'Guilherme Aguiar',
       description: 'Software Engineer',
       place: 'Brasilia-DF',
-      following: [{ username: 'caiooliv' }, { username: 'x' }],
+      following: [{ username: 'caiooliv' }],
     },
     {
       username: 'caiooliv',
@@ -59,14 +59,21 @@ const UsersProvider: React.FC = ({ children }) => {
       description: 'Software Engineer',
       place: 'Brasilia-DF',
       birth: '18 de janeiro de 1997',
-      following: [{ username: 'matheus-rn' }, { username: 'guilherme-aguiar' }],
+      following: [{ username: 'z' }, { username: 'guilherme-aguiar' }],
+    },
+    {
+      username: 'z',
+      description: 'Software Engineer',
+      place: 'Rio de Janeiro-RJ',
+      completeName: 'zzzz',
+      following: [{ username: 'matheus-rn' }],
     },
     {
       username: 'matheus-rn',
       completeName: 'Matheus',
       description: 'Software Engineer',
       place: 'Brasilia-DF',
-      following: [{ username: 'caiooliv' }],
+      following: [{ username: 'z' }],
     },
     {
       username: 'x',
@@ -84,6 +91,16 @@ const UsersProvider: React.FC = ({ children }) => {
     },
   ]);
   const [loggedUser, setLoggedUser] = useState<User | null>(users[0]);
+
+  useEffect(() => {
+    const newLoggedUser = users.find(
+      (user) => user.username === loggedUser?.username,
+    );
+
+    setLoggedUser(newLoggedUser as User);
+
+    // eslint-disable-next-line
+  }, [users]);
 
   const removeFollowers = useCallback((BFSResult: number[][]): number[][] => {
     return BFSResult.filter((node) => node[1] !== 1);
