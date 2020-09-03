@@ -102,9 +102,12 @@ const UsersProvider: React.FC = ({ children }) => {
     // eslint-disable-next-line
   }, [users]);
 
-  const removeFollowers = useCallback((BFSResult: number[][]): number[][] => {
-    return BFSResult.filter((node) => node[1] !== 1);
-  }, []);
+  const cleanFollowersData = useCallback(
+    (BFSResult: number[][]): number[][] => {
+      return BFSResult.filter((node) => node[1] === 2);
+    },
+    [],
+  );
 
   const bfs = useCallback(
     (startingNode: User): number[][] => {
@@ -143,10 +146,10 @@ const UsersProvider: React.FC = ({ children }) => {
           }
         });
       }
-      const cleanGraph = removeFollowers(graph.slice(1));
+      const cleanGraph = cleanFollowersData(graph.slice(1));
       return cleanGraph;
     },
-    [users, removeFollowers],
+    [users, cleanFollowersData],
   );
 
   return (
