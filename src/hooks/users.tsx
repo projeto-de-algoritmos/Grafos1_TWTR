@@ -5,7 +5,7 @@ interface UsersContextData {
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
   loggedUser: User | null;
   setLoggedUser: React.Dispatch<React.SetStateAction<User | null>>;
-  bfs(startingNode: User): number[];
+  bfs(startingNode: User): number[][];
 }
 
 interface FollowingType {
@@ -85,71 +85,49 @@ const UsersProvider: React.FC = ({ children }) => {
   ]);
   const [loggedUser, setLoggedUser] = useState<User | null>(users[0]);
 
-  const removeFollowers = useCallback(
-    (BFSResult: number[], startingNodeIndex: number): number[] => {
-      const newResult = BFSResult.filter(
-        (element) =>
-          !users[startingNodeIndex].following.some(
-            (follow) => users[element].username === follow.username,
-          ),
-      );
-
-      return newResult;
-    },
-    [users],
-  );
+  const removeFollowers = useCallback((BFSResult: number[][]): number[][] => {
+    return BFSResult.filter((node) => node[1] !== 1);
+  }, []);
 
   const bfs = useCallback(
-    (startingNode: User): number[] => {
-      // array that tracks the graph
-      const pathway = [] as number[];
+    (startingNode: User): number[][] => {
+      const graph = [] as number[][];
 
-      // create a visited array
       const visited = [] as boolean[];
 
       for (let i = 0; i < users.length; i++) {
         visited[i] = false;
       }
 
-      // Create an object for queue
-      const queue = [] as number[];
+      const queue = [] as number[][];
 
-      // add the starting node to the queue
       const startingNodeIndex = users.findIndex(
         (user) => user.username === startingNode.username,
       );
 
       visited[startingNodeIndex] = true;
 
-      queue.push(startingNodeIndex);
+      queue[0] = [startingNodeIndex, 0];
 
-      // loop until queue is element
       while (queue.length > 0) {
-        // get the element from the queue
-        const getQueueElement = queue.shift() as number;
-        pathway.push(getQueueElement);
-        // passing the current vertex to callback funtion
+        const getQueueElement = queue.shift() as number[];
+        graph.push(getQueueElement);
 
-        // get the adjacent list for current vertex
-        const getList = users[getQueueElement].following;
-
-        // loop through the list and add the element to the
-        // queue if it is not processed yet
+        const getList = users[getQueueElement[0]].following;
 
         getList.forEach((user) => {
           const neighIndex = users.findIndex(
             (usr) => usr.username === user.username,
           );
-
           if (!visited[neighIndex]) {
             visited[neighIndex] = true;
-            queue.push(neighIndex);
+            const next = [neighIndex, getQueueElement[1] + 1];
+            queue[queue.length] = next;
           }
         });
       }
-      const filteredPath = removeFollowers(pathway.slice(1), startingNodeIndex);
-
-      return filteredPath;
+      const cleanGraph = removeFollowers(graph.slice(1));
+      return cleanGraph;
     },
     [users, removeFollowers],
   );

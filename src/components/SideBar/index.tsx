@@ -17,10 +17,10 @@ import {
 
 const SideBar: React.FC = () => {
   const { users, bfs, loggedUser } = useUsers();
-  const [pathway, setPathway] = useState<number[]>([]);
+  const [graph, setGraph] = useState<number[][]>([]);
 
   useEffect(() => {
-    setPathway(bfs(loggedUser as User));
+    setGraph(bfs(loggedUser as User));
   }, [bfs, loggedUser]);
 
   return (
@@ -35,11 +35,11 @@ const SideBar: React.FC = () => {
           {/* Aplicar grafo aqui */}
           <List
             title="Talvez você curta"
-            elements={pathway.map((userIndex: number) => {
+            elements={graph.map((userIndex: number[]) => {
               return (
                 <FollowSuggestion
-                  name={users[userIndex].completeName}
-                  nickname={users[userIndex].username}
+                  name={users[userIndex[0]].completeName}
+                  nickname={users[userIndex[0]].username}
                 />
               );
             })}
