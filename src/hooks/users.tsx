@@ -6,6 +6,8 @@ import React, {
   useEffect,
 } from 'react';
 
+import { data } from './data';
+
 interface UsersContextData {
   users: User[];
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
@@ -37,59 +39,7 @@ const UsersProvider: React.FC = ({ children }) => {
   // caio = users[2].following = [amigoCaio],
   // ]
 
-  const [users, setUsers] = useState<User[]>([
-    {
-      username: 'lucassiqz',
-      completeName: 'Lucas Siqueira',
-      description: 'Software Engineer',
-      place: 'Brasilia-DF',
-      birth: '14 de julho de 1997',
-      following: [{ username: 'guilherme-aguiar' }],
-    },
-    {
-      username: 'guilherme-aguiar',
-      completeName: 'Guilherme Aguiar',
-      description: 'Software Engineer',
-      place: 'Brasilia-DF',
-      following: [{ username: 'caiooliv' }],
-    },
-    {
-      username: 'caiooliv',
-      completeName: 'Caio Oliveira',
-      description: 'Software Engineer',
-      place: 'Brasilia-DF',
-      birth: '18 de janeiro de 1997',
-      following: [{ username: 'z' }, { username: 'guilherme-aguiar' }],
-    },
-    {
-      username: 'z',
-      description: 'Software Engineer',
-      place: 'Rio de Janeiro-RJ',
-      completeName: 'zzzz',
-      following: [{ username: 'matheus-rn' }],
-    },
-    {
-      username: 'matheus-rn',
-      completeName: 'Matheus',
-      description: 'Software Engineer',
-      place: 'Brasilia-DF',
-      following: [{ username: 'z' }],
-    },
-    {
-      username: 'x',
-      completeName: 'xxxx',
-      description: 'Software Engineer',
-      place: 'São Paulo-SP',
-      following: [{ username: 'lucassiqz' }],
-    },
-    {
-      username: 'y',
-      description: 'Software Engineer',
-      place: 'Rio de Janeiro-RJ',
-      completeName: 'yyyy',
-      following: [],
-    },
-  ]);
+  const [users, setUsers] = useState<User[]>(data);
   const [loggedUser, setLoggedUser] = useState<User | null>(users[0]);
 
   useEffect(() => {
