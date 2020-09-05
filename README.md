@@ -1,4 +1,4 @@
-# TWTR (Em construção)
+# TWTR
 
 **Número da Lista**: 1<br>
 **Conteúdo da Disciplina**: Grafos 1<br>
@@ -10,7 +10,6 @@
 | 15/0137567  |  Lucas Siqueira Rodrigues |
 
 ## Sobre 
-Descreva os objetivos do seu projeto e como ele funciona. 
 O projeto é um clone do twitter onde implementamos um algoritmo de recomendação de pessoas para seguir. O algoritmo é feito a partir de uma busca em largura. O projeto já começa com um usuário logado, sendo possível fazer login com outros usuários pré-cadastrados e também é possível seguir pessoas da área de recomendação, chamada "Talvez você curta". O sistema vai não vai te recomendar pessoas que você já segue, ele vai analisar as camadas intermediárias a partir do grafo que é criado tendo o usuário logado no momento como node inicial. Sempre que uma nova pessoa é seguida o BFS é chamado novamente e a lista de recomendações é atualizada.
 
 ## Screenshots
