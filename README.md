@@ -85,5 +85,7 @@ Ao iniciar a aplicação, você pode trocar de usuário (a lista de usuários di
 ## Apresentação
 A apresentação em video está disponível no link: https://github.com/projeto-de-algoritmos/Grafos1_TWTR/blob/master/Apresentacao.mp4
 
-
+## Referências
+- [Graph Traversal with BFS](https://dev.to/clintdev/graph-traversal-with-bfs-code-javascript-3nc6)
+- [Twitter UI Clone Tutorial](https://www.youtube.com/watch?v=K-8z_4xvT3o&t)
 
