@@ -56,7 +56,7 @@ Execute o projeto
 > yarn start
 
 ## Uso 
-Acessando o site pela URL, você pode trocar de usuário (a lista de usuários disponíveis esta logo abaixo), clicando na seta ao lado do nome do usuário logado no canto inferior esquerdo e também pode seguir usuários na sua lista de recomendações, o que gera uma nova lista.
+Ao iniciar a aplicação, você pode trocar de usuário (a lista de usuários disponíveis esta logo abaixo), clicando na seta ao lado do nome do usuário logado no canto inferior esquerdo e também pode seguir usuários na sua lista de recomendações, o que gera uma nova lista.
 
 #### Usuários disponíveis:
 - lucassiqz
