@@ -51,7 +51,7 @@ O projeto é um clone do twitter onde implementamos um algoritmo de recomendaç�
 - [Eslint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 
-Não é necessário instalar nada, o deploy da aplicação foi feito pelo netlify na url: https://grafos1-twtr.netlify.app/
+O deploy da aplicação foi feito pelo netlify na url: https://grafos1-twtr.netlify.app/
 
 Caso queira executar o projeto em sua maquina, é necessário ter o node instalado, recomendamos a utilização do yarn como gerenciador de pacotes, porém também pode ser utilizado com o npm, e siga os seguintes passos:
 
