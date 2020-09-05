@@ -2,6 +2,7 @@
 
 **Número da Lista**: 1<br>
 **Conteúdo da Disciplina**: Grafos 1<br>
+**Número da Dupla:** 13<br>
 
 ## Alunos
 |Matrícula | Aluno |
@@ -37,8 +38,19 @@ O projeto é um clone do twitter onde implementamos um algoritmo de recomendaç�
 </div>
 
 ## Instalação 
-**Linguagem**: TypeScript<br>
-**Framework**: ReactJS<br>
+**Linguagem**: 
+
+- [TypeScript](https://www.typescriptlang.org/)
+
+**Tecnologias**: 
+
+- [React](https://pt-br.reactjs.org/)
+- [React-sticky-box](https://www.npmjs.com/package/react-sticky-box)
+- [Styled-components](https://styled-components.com/)
+- [Styled-icons](https://styled-icons.js.org/)
+- [Eslint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+
 Não é necessário instalar nada, o deploy da aplicação foi feito pelo netlify na url: https://grafos1-twtr.netlify.app/
 
 Caso queira executar o projeto em sua maquina, é necessário ter o node instalado, recomendamos a utilização do yarn como gerenciador de pacotes, porém também pode ser utilizado com o npm, e siga os seguintes passos:
